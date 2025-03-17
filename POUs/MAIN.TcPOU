@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="MAIN" Id="{7309b1d6-abb3-4f11-b8c6-ab5b24dad42d}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Main
+VAR
+  Timer:TON;
+  Timer2:TON;
+  Timer3:TON;
+  Timer4:TON;
+  Timer5:TON;
+  Timer6:TON;
+  Timer7:TON;
+  Timer8:TON;
+  
+  oTimer1:TON;
+  oTimer2:TON;
+  oTimer3:TON;
+  oTimer4:TON;
+  oTimer5:TON;
+  oTimer6:TON;
+  oTimer7:TON;
+  oTimer8:TON;
+  
+  Light1Out:BOOL;
+  Light2Out:BOOL;
+  Light3Out:BOOL;
+  Light4Out:BOOL;
+  Light5Out: BOOL;
+  Light6Out:BOOL;
+  Light7Out:BOOL;
+  Light8Out:BOOL;
+ 
+  rotateL : BOOL:=FALSE;
+  rotateR : BOOL:=FALSE;
+  x : BYTE:= 23;
+  n: INT :=1;
+  Ton_0: TON;
+  OutBit:BYTE;
+END_VAR
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(*
+Timer(IN:= GVL.bDin1 ,PT:= T#1S);
+GVL.bDout1 := Timer.Q;
+
+Timer2(IN:= GVL.bDin1,PT:= T#2S);
+GVL.bDout2 := Timer2.Q;
+
+Timer3(IN:= GVL.bDin1,PT:= T#3S);
+GVL.bDout3 := Timer3.Q;
+
+Timer4(IN:= GVL.bDin1,PT:= T#4S);
+GVL.bDout4 := Timer4.Q;
+
+Timer5(IN:= GVL.bDin1,PT:= T#5S);
+GVL.bDout5 := Timer5.Q;
+
+Timer6(IN:= GVL.bDin1,PT:= T#6S);
+GVL.bDout6 := Timer6.Q;
+
+Timer7(IN:= GVL.bDin1,PT:= T#7S);
+GVL.bDout7 := Timer7.Q;
+
+Timer8(IN:= GVL.bDin1,PT:= T#8S);
+GVL.bDout8 := Timer8.Q;
+
+oTimer1(IN:= GVL.bDout1, PT:= T#2S);
+Light1Out := oTimer1.Q;
+	
+IF Light1Out = TRUE THEN
+	GVL.bDout1 := FALSE;
+END_IF;
+
+oTimer2(IN:= GVL.bDout2, PT:= T#2S);
+Light2Out := oTimer2.Q;
+	
+IF Light2Out = TRUE THEN
+	GVL.bDout2 := FALSE;
+END_IF;
+
+oTimer3(IN:= GVL.bDout3, PT:= T#2S);
+Light3Out := oTimer3.Q;
+	
+IF Light3Out = TRUE THEN
+	GVL.bDout3 := FALSE;
+END_IF;
+
+oTimer4(IN:= GVL.bDout4, PT:= T#2S);
+Light4Out := oTimer4.Q;
+	
+IF Light4Out = TRUE THEN
+	GVL.bDout4 := FALSE;
+END_IF;
+
+oTimer5(IN:= GVL.bDout5, PT:= T#2S);
+Light5Out := oTimer5.Q;
+	
+IF Light5Out = TRUE THEN
+	GVL.bDout5 := FALSE;
+END_IF;
+
+oTimer6(IN:= GVL.bDout6, PT:= T#2S);
+Light6Out := oTimer6.Q;
+	
+IF Light6Out = TRUE THEN
+	GVL.bDout6 := FALSE;
+END_IF;
+
+oTimer7(IN:= GVL.bDout7, PT:= T#2S);
+Light7Out := oTimer7.Q;
+	
+IF Light7Out = TRUE THEN
+	GVL.bDout7 := FALSE;
+END_IF;
+oTimer8(IN:= GVL.bDout8, PT:= T#2S);
+Light8Out := oTimer8.Q;
+	
+IF Light8Out = TRUE THEN
+	GVL.bDout8 := FALSE;
+END_IF;
+ *)
+   Ton_0(IN:= NOT Ton_0.Q, PT:=T#15MS);
+	   IF Ton_0.Q AND GVL.bDin1 THEN
+		   OutBit.0:= x.7;
+		   x := SHL(x, n);
+		   x.0:=OutBit.0;
+		ELSIF Ton_0.Q AND GVL.bDin2 THEN
+			OutBit.0 := x.0;
+			x :=SHR( x, n);
+			x.7 := OutBit.0;
+	   END_IF
+	   
+	   gvl.bDout1 := x.0;
+	   gvl.bDout2 := x.1;
+	   gvl.bDout3 := x.2;
+	   gvl.bDout4 := x.3;
+	   gvl.bDout5 := x.4;
+	   gvl.bDout6 := x.5;
+	   gvl.bDout7 := x.6;
+	   gvl.bDout8 := x.7;
+	   
+  ]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="348" Count="0" />
+      <LineId Id="161" Count="0" />
+      <LineId Id="165" Count="0" />
+      <LineId Id="181" Count="0" />
+      <LineId Id="189" Count="1" />
+      <LineId Id="204" Count="1" />
+      <LineId Id="203" Count="0" />
+      <LineId Id="211" Count="0" />
+      <LineId Id="207" Count="0" />
+      <LineId Id="206" Count="0" />
+      <LineId Id="210" Count="0" />
+      <LineId Id="209" Count="0" />
+      <LineId Id="208" Count="0" />
+      <LineId Id="213" Count="1" />
+      <LineId Id="212" Count="0" />
+      <LineId Id="216" Count="1" />
+      <LineId Id="215" Count="0" />
+      <LineId Id="220" Count="0" />
+      <LineId Id="219" Count="0" />
+      <LineId Id="218" Count="0" />
+      <LineId Id="237" Count="1" />
+      <LineId Id="245" Count="0" />
+      <LineId Id="243" Count="0" />
+      <LineId Id="240" Count="0" />
+      <LineId Id="247" Count="1" />
+      <LineId Id="270" Count="5" />
+      <LineId Id="269" Count="0" />
+      <LineId Id="278" Count="12" />
+      <LineId Id="277" Count="0" />
+      <LineId Id="316" Count="5" />
+      <LineId Id="315" Count="0" />
+      <LineId Id="322" Count="5" />
+      <LineId Id="276" Count="0" />
+      <LineId Id="329" Count="5" />
+      <LineId Id="328" Count="0" />
+      <LineId Id="337" Count="4" />
+      <LineId Id="336" Count="0" />
+      <LineId Id="349" Count="1" />
+      <LineId Id="360" Count="1" />
+      <LineId Id="363" Count="5" />
+      <LineId Id="362" Count="0" />
+      <LineId Id="406" Count="1" />
+      <LineId Id="409" Count="6" />
+      <LineId Id="408" Count="0" />
+      <LineId Id="351" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
